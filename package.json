@@ -1,0 +1,25 @@
+{
+  "name": "srdjan-resume",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "ncu": "ncu -u"
+  },
+  "dependencies": {
+    "pixi.js": "^8.15.0",
+    "vue": "^3.5.26"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.8",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vue/tsconfig": "^0.8.1",
+    "npm-check-updates": "^19.3.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.2.2"
+  }
+}
