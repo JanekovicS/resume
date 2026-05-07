@@ -19,6 +19,8 @@ export class PixiApp {
     private scrollController: ScrollController;
     private inputManager!: InputManager;
 
+    private readonly onResize: () => void;
+
     constructor(containerElement: HTMLElement, onSelectExperience: (exp: Experience | null) => void) {
         this.app = new Application();
         this.container = new Container();
@@ -26,6 +28,11 @@ export class PixiApp {
         this.debugGraphics.visible = import.meta.env.DEV;
         this.onSelectExperience = onSelectExperience;
         this.scrollController = new ScrollController();
+        this.onResize = () => {
+            this.app.resize();
+            this.centerContainer();
+            this.starfield?.resize();
+        };
         this.init(containerElement);
     }
 
@@ -53,11 +60,7 @@ export class PixiApp {
 
         this.app.ticker.add((ticker: Ticker) => this.animate(ticker.deltaTime));
 
-        window.addEventListener('resize', () => {
-            this.app.resize();
-            this.centerContainer();
-            this.starfield.resize();
-        });
+        window.addEventListener('resize', this.onResize);
     }
 
     private createNodes(): void {
@@ -103,7 +106,7 @@ export class PixiApp {
     }
 
     private animate(delta: number): void {
-        const time = Date.now() / 1000;
+        const time = performance.now() / 1000;
         const design = this.isPortrait ? DESIGN.PORTRAIT : DESIGN.LANDSCAPE;
         const centerX = design.width / 2;
         const centerY = design.height / 2;
@@ -126,14 +129,12 @@ export class PixiApp {
             );
         });
 
-        this.container.children.sort((a, b) => {
-            const nodeA = this.nodes.find(n => n.container === a);
-            const nodeB = this.nodes.find(n => n.container === b);
-            if (!nodeA || !nodeB) return 0;
-            return nodeB.getEffectiveZ(currentZ) - nodeA.getEffectiveZ(currentZ);
-        });
+        const sorted = this.nodes
+            .slice()
+            .sort((a, b) => b.getEffectiveZ(currentZ) - a.getEffectiveZ(currentZ));
+        sorted.forEach((node, i) => this.container.setChildIndex(node.container, i));
 
-        this.starfield.update(time, this.scrollController.velocity, this.scrollController.lastWheelTime);
+        this.starfield.update(time, this.scrollController.velocity, this.scrollController.lastInputTime);
     }
 
     public pause(): void {
@@ -151,7 +152,9 @@ export class PixiApp {
     }
 
     public destroy(): void {
-        this.starfield.destroy();
+        window.removeEventListener('resize', this.onResize);
+        this.inputManager?.destroy();
+        this.starfield?.destroy();
         this.app.destroy(true, { children: true, texture: true });
     }
 }

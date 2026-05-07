@@ -4,7 +4,7 @@ export class ScrollController {
     private _currentZ: number = 0;
     private _targetZ: number = 0;
     private _prevZ: number = 0;
-    private _lastWheelTime: number = 0;
+    private _lastInputTime: number = 0;
 
     public get currentZ(): number {
         return this._currentZ;
@@ -14,8 +14,8 @@ export class ScrollController {
         return this._targetZ;
     }
 
-    public get lastWheelTime(): number {
-        return this._lastWheelTime;
+    public get lastInputTime(): number {
+        return this._lastInputTime;
     }
 
     public get velocity(): number {
@@ -25,13 +25,13 @@ export class ScrollController {
     public scrollBy(delta: number): void {
         this._targetZ += delta * SCROLL.SCROLL_MULTIPLIER;
         this._targetZ = Math.max(SCROLL.MIN_Z, Math.min(SCROLL.MAX_Z, this._targetZ));
-        this._lastWheelTime = Date.now();
+        this._lastInputTime = performance.now();
     }
 
     public update(deltaTime: number): void {
         this._prevZ = this._currentZ;
 
-        if (Date.now() - this._lastWheelTime > SCROLL.SNAP_DELAY_MS) {
+        if (performance.now() - this._lastInputTime > SCROLL.SNAP_DELAY_MS) {
             const nearestSnap = SCROLL.SNAP_POINTS.reduce((prev, curr) =>
                 Math.abs(curr - this._targetZ) < Math.abs(prev - this._targetZ) ? curr : prev
             );

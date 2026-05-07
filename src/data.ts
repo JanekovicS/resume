@@ -19,14 +19,14 @@ export const experiences: Experience[] = [
     id: 'intro',
     title: 'Srđan Janeković',
     company: 'Technical Lead | Web Games',
-    period: '',
+    period: '2013 – Present',
     year: 'SCROLL TO START',
-    description: '12+ years of professional experience delivering digital games and web-based products. Specialist in JavaScript/TypeScript, Phaser, and high-performance SDKs.',
+    description: '12+ years delivering digital games and web-based products. Specialist in JavaScript/TypeScript, Phaser, and high-performance SDKs.',
     highlights: [
-      'Technical Lead with 12+ years experience',
-      'Specialist in Web Games (Phaser)',
-      'Expert in JavaScript/TypeScript & Vue.js',
-      'Platform & SDK engineering specialist'
+      'Web games & UI systems (Phaser, PixiJS)',
+      'TypeScript, Vue.js, modern frontend architecture',
+      'Platform / SDK engineering & developer tooling',
+      'Technical delivery in regulated environments'
     ],
     color: 0xebf7ff,
     lx: 960,
@@ -41,12 +41,11 @@ export const experiences: Experience[] = [
     company: 'ITS (Information Technology School)',
     period: '2009 - 2013',
     year: '2009',
-    description: 'Foundation in IT and software development. Followed by 14th Belgrade Gymnasium.',
+    description: 'Foundation in IT and software engineering — the launchpad for a career in production game development.',
     highlights: [
       'B.S. in Information Technology',
-      'Three years of intensive IT study',
-      'Foundation in Applicative Software engineering',
-      'High school focus on social sciences'
+      'Focus on Applicative Software engineering',
+      'Practical, project-based curriculum'
     ],
     color: 0x90caf9,
     lx: 960,
@@ -121,16 +120,16 @@ export const fullResume = {
   name: 'Srđan Janeković',
   location: 'Belgrade, Serbia',
   email: 'srdjan.janekovic@gmail.com',
-  linkedin: 'www.linkedin.com/in/srđan-janeković-47711862',
+  linkedin: 'www.linkedin.com/in/srdjan-janekovic-47711862',
   summary: 'Technical Lead with 12+ years of professional experience delivering digital games and web-based products in regulated/lottery environments. Strong JavaScript/TypeScript engineering and platform ownership, focused on scalable SDKs/frameworks, developer experience, release discipline, and performance. Effective cross-functional partner, translating design intent into polished, responsive UI through close collaboration with designers (Figma handoff, specs, iteration).',
   skills: [
-    'Web game engineering (Phaser), UI systems, performance/debugging, responsive layout',
-    'JavaScript/TypeScript, Vue.js, modern frontend architecture, Vite',
-    'Build tooling & custom plugins: Vite/Rollup configuration, custom plugin creation, code generation, shared tooling',
-    'Platform/SDK engineering: templates, CLIs, shared libraries, pipelines, documentation',
-    'CI/CD and packaging automation, release management and build standardization',
-    'Design collaboration: Figma workflows, interaction/state alignment, implementation fidelity',
-    'SQL, modern Git-based workflows'
+    'Languages: TypeScript, JavaScript, SQL',
+    'Frameworks: Vue 3, Phaser, PixiJS, React',
+    'Game engineering: UI systems, performance, responsive layout, debugging',
+    'Tooling: Vite, Rollup, custom plugins, code generation',
+    'Platform / SDK: shared libraries, CLIs, templates, asset pipelines, docs',
+    'Delivery: CI/CD, release management, build standardization',
+    'Collaboration: Figma handoff, interaction specs, design fidelity'
   ],
   experience: [
     {
@@ -147,7 +146,6 @@ export const fullResume = {
             'Built a Vue.js game-wrapper component for platform integration.',
             'Delivered POC/MVP Vue.js Backoffice application for RGS.',
             'Led technical delivery of complex games (jackpots, bonus games, special symbols).',
-            'Helped scale the studio: hiring, team structure decisions.',
             'Mentored developers and QAs; partnered with designers via Figma.'
           ]
         },
@@ -183,10 +181,6 @@ export const fullResume = {
       degree: 'B.S., Information Technology',
       school: 'ITS (Information Technology School)',
       period: '2009 – 2013'
-    },
-    {
-      degree: '14th Belgrade Gymnasium',
-      period: '2005 – 2009'
     }
   ]
 };

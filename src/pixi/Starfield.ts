@@ -1,8 +1,15 @@
 import { Application, Graphics } from 'pixi.js';
 import { STARFIELD } from './constants';
 
+interface ParticleState {
+    baseAlpha: number;
+    blinkSpeed: number;
+    blinkOffset: number;
+}
+
 export class Starfield {
     private particles: Graphics[] = [];
+    private states: ParticleState[] = [];
     private app: Application;
 
     constructor(app: Application) {
@@ -23,28 +30,28 @@ export class Starfield {
             p.x = Math.random() * this.app.screen.width;
             p.y = Math.random() * this.app.screen.height;
 
-            (p as any).baseAlpha = alpha;
-            (p as any).blinkSpeed = Math.random() * (MAX_BLINK_SPEED - MIN_BLINK_SPEED) + MIN_BLINK_SPEED;
-            (p as any).blinkOffset = Math.random() * Math.PI * 2;
-
             this.app.stage.addChildAt(p, 0);
             this.particles.push(p);
+            this.states.push({
+                baseAlpha: alpha,
+                blinkSpeed: Math.random() * (MAX_BLINK_SPEED - MIN_BLINK_SPEED) + MIN_BLINK_SPEED,
+                blinkOffset: Math.random() * Math.PI * 2,
+            });
         }
     }
 
-    public update(time: number, scrollVelocity: number, lastWheelTime: number): void {
+    public update(time: number, scrollVelocity: number, lastInputTime: number): void {
         const { WARP_THRESHOLD, WARP_MULTIPLIER } = STARFIELD;
         const warpIntensity = Math.abs(scrollVelocity) * 0.5;
         const screenCenterX = this.app.screen.width / 2;
         const screenCenterY = this.app.screen.height / 2;
-        const isActivelyScrolling = Date.now() - lastWheelTime < 400;
+        const isActivelyScrolling = performance.now() - lastInputTime < 400;
 
-        this.particles.forEach((p) => {
-            const baseAlpha = (p as any).baseAlpha || 0.5;
-            const blinkSpeed = (p as any).blinkSpeed || 2;
-            const blinkOffset = (p as any).blinkOffset || 0;
+        for (let i = 0; i < this.particles.length; i++) {
+            const p = this.particles[i]!;
+            const s = this.states[i]!;
 
-            p.alpha = baseAlpha * (0.5 + Math.sin(time * blinkSpeed + blinkOffset) * 0.5);
+            p.alpha = s.baseAlpha * (0.5 + Math.sin(time * s.blinkSpeed + s.blinkOffset) * 0.5);
 
             if (warpIntensity > WARP_THRESHOLD && isActivelyScrolling) {
                 const dx = p.x - screenCenterX;
@@ -58,7 +65,7 @@ export class Starfield {
                     p.y = screenCenterY + (Math.random() - 0.5) * 100;
                 }
             }
-        });
+        }
     }
 
     public resize(): void {
@@ -71,5 +78,6 @@ export class Starfield {
     public destroy(): void {
         this.particles.forEach(p => p.destroy());
         this.particles = [];
+        this.states = [];
     }
 }

@@ -9,6 +9,9 @@ export class TimelineNode {
     public baseX: number;
     public baseY: number;
 
+    private glow!: Graphics;
+    private label!: Text;
+
     private hoverScale: number = 1.0;
     private currentHoverScale: number = 1.0;
 
@@ -22,13 +25,13 @@ export class TimelineNode {
     }
 
     private createVisuals(): void {
-        const glow = new Graphics();
-        glow.circle(0, 0, 100).fill({ color: this.exp.color, alpha: 0.15 });
-        glow.visible = false;
+        this.glow = new Graphics();
+        this.glow.circle(0, 0, 100).fill({ color: this.exp.color, alpha: 0.15 });
+        this.glow.visible = false;
 
         const style = new TextStyle({
             fill: '#' + this.exp.color.toString(16).padStart(6, '0'),
-            fontSize: 300,
+            fontSize: this.exp.id === 'intro' ? 200 : 300,
             fontWeight: '900',
             fontFamily: 'Outfit',
             dropShadow: {
@@ -38,8 +41,8 @@ export class TimelineNode {
                 alpha: 0.5
             }
         });
-        const label = new Text({ text: this.exp.year, style });
-        label.anchor.set(0.5);
+        this.label = new Text({ text: this.exp.year, style });
+        this.label.anchor.set(0.5);
 
         const hintStyle = new TextStyle({
             fill: '#4facfe',
@@ -56,11 +59,7 @@ export class TimelineNode {
         hint.y = 180;
         hint.alpha = 0.7;
 
-        this.container.addChild(glow, label, hint);
-
-        if (this.exp.id === 'intro') {
-            label.style.fontSize = 200;
-        }
+        this.container.addChild(this.glow, this.label, hint);
     }
 
     private setupInteraction(onSelect: (exp: Experience) => void): void {
@@ -138,9 +137,7 @@ export class TimelineNode {
             this.currentHoverScale += (this.hoverScale - this.currentHoverScale) * NODE.HOVER_LERP * deltaTime;
             finalScale *= this.currentHoverScale;
 
-            const label = this.container.children[this.container.children.length - 2] as Text; // Label is always penultimate
-            const textWidth = label.width / this.container.scale.x;
-
+            const textWidth = this.label.width / this.container.scale.x;
             const widthRatio = this.exp.id === 'intro' ? 0.85 : NODE.MAX_WIDTH_RATIO;
             const maxWidth = design.width * widthRatio;
             const maxScale = maxWidth / textWidth;
@@ -155,9 +152,8 @@ export class TimelineNode {
             const saturatedAlpha = Math.pow(alpha, 0.5);
             this.container.alpha = Math.max(0, Math.min(1, saturatedAlpha));
 
-            const glow = this.container.children[0] as Graphics;
-            glow.visible = true;
-            glow.alpha = this.container.alpha * 0.3;
+            this.glow.visible = true;
+            this.glow.alpha = this.container.alpha * 0.3;
         } else if (isPreview) {
             this.container.visible = true;
             this.container.eventMode = 'none';
@@ -176,10 +172,8 @@ export class TimelineNode {
     }
 
     public snapToTarget(centerX: number, centerY: number, effectiveZ: number): void {
-        const targetX = centerX;
-        const targetY = centerY;
-        this.container.x = targetX;
-        this.container.y = targetY;
+        this.container.x = centerX;
+        this.container.y = centerY;
 
         const scale = CAMERA.FOCAL_LENGTH / (CAMERA.FOCAL_LENGTH + effectiveZ);
         this.container.scale.set(scale);
