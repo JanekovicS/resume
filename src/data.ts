@@ -22,7 +22,7 @@ export const experiences: Experience[] = [
     company: 'Technical Lead | Web Games',
     period: '2013 – Present',
     year: 'SCROLL TO START',
-    description: '12+ years delivering digital games and web-based products. Specialist in JavaScript/TypeScript, Phaser, and high-performance SDKs.',
+    description: '13+ years delivering digital games and web-based products. Specialist in JavaScript/TypeScript, Phaser, and high-performance SDKs.',
     highlights: [
       'Web games & UI systems (Phaser, PixiJS)',
       'TypeScript, Vue.js, modern frontend architecture',
@@ -127,7 +127,7 @@ export const fullResume = {
   location: 'Belgrade, Serbia',
   email: 'srdjan.janekovic@gmail.com',
   linkedin: 'www.linkedin.com/in/srdjan-janekovic-47711862',
-  summary: 'Technical Lead with 12+ years of professional experience delivering digital games and web-based products in regulated/lottery environments. Strong JavaScript/TypeScript engineering and platform ownership, focused on scalable SDKs/frameworks, developer experience, release discipline, and performance. Effective cross-functional partner, translating design intent into polished, responsive UI through close collaboration with designers (Figma handoff, specs, iteration).',
+  summary: 'Technical Lead with 13+ years of professional experience delivering digital games and web-based products in regulated/lottery environments. Strong JavaScript/TypeScript engineering and platform ownership, focused on scalable SDKs/frameworks, developer experience, release discipline, and performance. Effective cross-functional partner, translating design intent into polished, responsive UI through close collaboration with designers (Figma handoff, specs, iteration).',
   skills: [
     'Languages: TypeScript, JavaScript, SQL',
     'Frameworks: Vue 3, Phaser, PixiJS, React',
