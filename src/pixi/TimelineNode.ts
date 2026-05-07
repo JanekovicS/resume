@@ -106,8 +106,8 @@ export class TimelineNode {
 
         this.container.visible = true;
 
-        let targetX = centerX - mouseOffsetX * (effectiveZ / 1000);
-        let targetY = centerY - mouseOffsetY * (effectiveZ / 1000);
+        let targetX = centerX + mouseOffsetX;
+        let targetY = centerY + mouseOffsetY;
 
         const marginX = design.width * 0.08;
         const marginY = design.height * 0.08;

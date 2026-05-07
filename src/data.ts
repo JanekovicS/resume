@@ -6,6 +6,7 @@ export interface Experience {
   year: string;
   description: string;
   highlights?: string[];
+  tags?: string[];
   color: number;
   lx: number;
   ly: number;
@@ -28,6 +29,7 @@ export const experiences: Experience[] = [
       'Platform / SDK engineering & developer tooling',
       'Technical delivery in regulated environments'
     ],
+    tags: ['TypeScript', 'Phaser', 'Vue 3', 'SDK', 'Vite'],
     color: 0xebf7ff,
     lx: 960,
     ly: 540,
@@ -47,6 +49,7 @@ export const experiences: Experience[] = [
       'Focus on Applicative Software engineering',
       'Practical, project-based curriculum'
     ],
+    tags: ['B.S. IT', 'Software Engineering'],
     color: 0x90caf9,
     lx: 960,
     ly: 540,
@@ -67,6 +70,7 @@ export const experiences: Experience[] = [
       'Supported end-to-end delivery in regulated environments',
       'Maintenance and debugging of legacy components'
     ],
+    tags: ['Phaser', 'CreateJS', 'Flex', 'React', 'Lottery / Regulated'],
     color: 0x42a5f5,
     lx: 960,
     ly: 540,
@@ -87,6 +91,7 @@ export const experiences: Experience[] = [
       'Improved build/release workflows',
       'Collaborated on early studio ramp-up'
     ],
+    tags: ['Phaser', 'TypeScript', 'Build Tooling', 'Reusable Modules'],
     color: 0x2196f3,
     lx: 960,
     ly: 540,
@@ -107,6 +112,7 @@ export const experiences: Experience[] = [
       'Built automated asset pipelines and UI kits',
       'Led delivery of complex games (jackpots, bonus logic)'
     ],
+    tags: ['SDK Owner', 'TypeScript', 'Vue 3', 'Vite Plugins', 'CI/CD', 'Mentoring'],
     color: 0x1565c0,
     lx: 960,
     ly: 540,

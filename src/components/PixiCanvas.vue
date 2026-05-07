@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
-import { PixiApp } from '../pixi/PixiApp';
+import { PixiApp, type ScrollInfo } from '../pixi/PixiApp';
 import type { Experience } from '../data';
 
 const props = defineProps<{
     onSelect: (exp: Experience | null) => void;
+    onScroll?: (info: ScrollInfo) => void;
 }>();
 
 const pixiContainer = ref<HTMLElement | null>(null);
@@ -12,7 +13,7 @@ let pixiApp: PixiApp | null = null;
 
 onMounted(() => {
     if (pixiContainer.value) {
-        pixiApp = new PixiApp(pixiContainer.value, props.onSelect);
+        pixiApp = new PixiApp(pixiContainer.value, props.onSelect, props.onScroll);
     }
 });
 
@@ -25,7 +26,9 @@ onUnmounted(() => {
 defineExpose({
     pause: () => pixiApp?.pause(),
     resume: () => pixiApp?.resume(),
-    scrollToNextYear: () => pixiApp?.scrollToNextYear()
+    scrollToNextYear: () => pixiApp?.scrollToNextYear(),
+    scrollToIndex: (i: number) => pixiApp?.scrollToIndex(i),
+    jumpToIndex: (i: number) => pixiApp?.jumpToIndex(i),
 });
 </script>
 

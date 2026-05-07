@@ -1,4 +1,4 @@
-import { Application, Graphics } from 'pixi.js';
+import { Application, Container, Graphics } from 'pixi.js';
 import { STARFIELD } from './constants';
 
 interface ParticleState {
@@ -11,9 +11,12 @@ export class Starfield {
     private particles: Graphics[] = [];
     private states: ParticleState[] = [];
     private app: Application;
+    private parallaxLayer: Container;
 
     constructor(app: Application) {
         this.app = app;
+        this.parallaxLayer = new Container();
+        this.app.stage.addChildAt(this.parallaxLayer, 0);
     }
 
     public create(): void {
@@ -30,7 +33,7 @@ export class Starfield {
             p.x = Math.random() * this.app.screen.width;
             p.y = Math.random() * this.app.screen.height;
 
-            this.app.stage.addChildAt(p, 0);
+            this.parallaxLayer.addChild(p);
             this.particles.push(p);
             this.states.push({
                 baseAlpha: alpha,
@@ -40,12 +43,15 @@ export class Starfield {
         }
     }
 
-    public update(time: number, scrollVelocity: number, lastInputTime: number): void {
-        const { WARP_THRESHOLD, WARP_MULTIPLIER } = STARFIELD;
+    public update(time: number, scrollVelocity: number, lastInputTime: number, mouseNX: number = 0, mouseNY: number = 0): void {
+        const { WARP_THRESHOLD, WARP_MULTIPLIER, PARALLAX_X, PARALLAX_Y } = STARFIELD;
         const warpIntensity = Math.abs(scrollVelocity) * 0.5;
         const screenCenterX = this.app.screen.width / 2;
         const screenCenterY = this.app.screen.height / 2;
         const isActivelyScrolling = performance.now() - lastInputTime < 400;
+
+        this.parallaxLayer.x = -mouseNX * PARALLAX_X;
+        this.parallaxLayer.y = -mouseNY * PARALLAX_Y;
 
         for (let i = 0; i < this.particles.length; i++) {
             const p = this.particles[i]!;
@@ -79,5 +85,6 @@ export class Starfield {
         this.particles.forEach(p => p.destroy());
         this.particles = [];
         this.states = [];
+        this.parallaxLayer.destroy({ children: true });
     }
 }

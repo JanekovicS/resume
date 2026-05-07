@@ -3,6 +3,7 @@ import type { Experience } from '../data';
 
 defineProps<{
     selectedExperience: Experience | null;
+    showHeader?: boolean;
     onClose: () => void;
     onContinue: () => void;
 }>();
@@ -10,7 +11,7 @@ defineProps<{
 
 <template>
     <div class="overlay-ui" :class="{ 'has-selection': !!selectedExperience }">
-        <header class="header">
+        <header class="header" :class="{ hidden: !showHeader }">
             <h1>SRĐAN JANEKOVIĆ</h1>
             <p>TECHNICAL LEAD • WEB GAMES • HIGH-PERFORMANCE SDKs</p>
         </header>
@@ -32,6 +33,10 @@ defineProps<{
 
                         <ul v-if="selectedExperience.highlights" class="highlights-list">
                             <li v-for="point in selectedExperience.highlights" :key="point">{{ point }}</li>
+                        </ul>
+
+                        <ul v-if="selectedExperience.tags && selectedExperience.tags.length" class="tag-list">
+                            <li v-for="tag in selectedExperience.tags" :key="tag">{{ tag }}</li>
                         </ul>
 
                         <div class="actions">
@@ -71,6 +76,12 @@ defineProps<{
     margin: 1.5rem 2rem;
     padding-left: 1.25rem;
     pointer-events: none;
+}
+
+.header.hidden {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .footer {
@@ -224,6 +235,29 @@ h3 {
     background: #4facfe;
     border-radius: 50%;
     box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+}
+
+.tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 2.5rem;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.tag-list li {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    background: rgba(79, 172, 254, 0.08);
+    border: 1px solid rgba(79, 172, 254, 0.25);
+    color: rgba(224, 243, 255, 0.85);
 }
 
 .primary-btn {

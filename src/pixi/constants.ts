@@ -28,6 +28,8 @@ export const STARFIELD = {
     MAX_BLINK_SPEED: 4,
     WARP_THRESHOLD: 0.5,
     WARP_MULTIPLIER: 2,
+    PARALLAX_X: 18,
+    PARALLAX_Y: 12,
 } as const;
 
 export const NODE = {
@@ -42,4 +44,12 @@ export const NODE = {
     POSITION_LERP: 0.2,
     MAX_WIDTH_RATIO: 0.9,
     FADE_DISTANCE: 800,
+    PARALLAX_X: 35,
+    PARALLAX_Y: 22,
+} as const;
+
+export const CONSTELLATION = {
+    COLOR: 0x4facfe,
+    ALPHA: 0.35,
+    WIDTH: 1.5,
 } as const;
