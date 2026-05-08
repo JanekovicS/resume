@@ -51,3 +51,23 @@ export const CONSTELLATION = {
     ALPHA: 0.35,
     WIDTH: 1.5,
 } as const;
+
+export const PLANET = {
+    PARALLAX_X: 22,
+    PARALLAX_Y: 14,
+    FADE_IN_NEAR: -200,
+    FADE_IN_FAR: 200,
+    FADE_OUT_NEAR: 7000,
+    FADE_OUT_FAR: 9000,
+} as const;
+
+export const EVENT = {
+    FIRST_DELAY_MIN: 2,
+    FIRST_DELAY_MAX: 5,
+    SPAWN_INTERVAL_MIN: 6,
+    SPAWN_INTERVAL_MAX: 14,
+    COMET_PROBABILITY: 0.65,
+    Z_MIN: 800,
+    Z_MAX: 3500,
+    Y_BANDS: [[0.05, 0.32], [0.68, 0.95]] as const,
+} as const;

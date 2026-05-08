@@ -21,7 +21,6 @@ const handleScroll = (info: ScrollInfo) => {
 };
 
 const showScrollHint = computed(() =>
-  !scrollInfo.value.hasInteracted &&
   scrollInfo.value.snapIndex === 0 &&
   !selectedExperience.value &&
   !isCvOpen.value

@@ -1,7 +1,13 @@
 export { PixiApp } from './PixiApp';
 export { Starfield } from './Starfield';
+export { NebulaField } from './NebulaField';
+export { Nebula } from './Nebula';
 export { ScrollController } from './ScrollController';
 export { TimelineNode } from './TimelineNode';
+export { Planet } from './Planet';
+export { Comet } from './Comet';
+export { UFO } from './UFO';
+export { EventManager } from './EventManager';
 export { InputManager } from './InputManager';
 export * from './constants';
 export * from './types';

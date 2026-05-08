@@ -101,6 +101,7 @@ h1 {
     letter-spacing: 0.2em;
     color: #fff;
     line-height: 1.1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 14px rgba(0, 0, 0, 0.55);
 }
 
 .header p {
@@ -108,9 +109,9 @@ h1 {
     letter-spacing: 0.35em;
     text-transform: uppercase;
     margin: 0.5rem 0 0;
-    color: #4facfe;
+    color: #b8d8ff;
     font-weight: 700;
-    opacity: 0.8;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 0, 0, 0.55);
 }
 
 .detail-card {

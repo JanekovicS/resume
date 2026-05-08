@@ -1,10 +1,13 @@
 import { Application, Container, Graphics, Ticker } from 'pixi.js';
 import { experiences } from '../data';
 import type { Experience } from '../data';
-import { DESIGN, CAMERA, NODE, SCROLL, CONSTELLATION } from './constants';
+import { DESIGN, CAMERA, NODE, SCROLL, CONSTELLATION, PLANET } from './constants';
 import { Starfield } from './Starfield';
+import { NebulaField } from './NebulaField';
 import { ScrollController } from './ScrollController';
 import { TimelineNode } from './TimelineNode';
+import { Planet, PLANETS } from './Planet';
+import { EventManager } from './EventManager';
 import { InputManager } from './InputManager';
 
 export interface ScrollInfo {
@@ -20,11 +23,14 @@ export class PixiApp {
     private debugGraphics: Graphics;
     private constellation: Graphics;
     private nodes: TimelineNode[] = [];
+    private planets: Planet[] = [];
+    private eventManager!: EventManager;
     private onSelectExperience: (exp: Experience | null) => void;
     private onScrollChange?: (info: ScrollInfo) => void;
 
     private isPortrait: boolean = false;
     private starfield!: Starfield;
+    private nebulaField!: NebulaField;
     private scrollController: ScrollController;
     private inputManager!: InputManager;
 
@@ -54,6 +60,8 @@ export class PixiApp {
         this.onReducedMotionChange = (e: MediaQueryListEvent) => {
             this.reducedMotion = e.matches;
             this.scrollController.setReducedMotion(e.matches);
+            this.eventManager?.setReducedMotion(e.matches);
+            this.nebulaField?.setReducedMotion(e.matches);
         };
         this.init(containerElement);
     }
@@ -75,17 +83,25 @@ export class PixiApp {
         this.starfield = new Starfield(this.app);
         this.starfield.create();
 
+        this.nebulaField = new NebulaField(this.app);
+        this.nebulaField.create();
+
         this.inputManager = new InputManager(this.scrollController);
         this.inputManager.setupStageTap(this.app, () => this.onSelectExperience(null));
+
+        this.eventManager = new EventManager(this.container);
 
         if (typeof window !== 'undefined' && window.matchMedia) {
             this.reducedMotionMQL = window.matchMedia('(prefers-reduced-motion: reduce)');
             this.reducedMotion = this.reducedMotionMQL.matches;
             this.scrollController.setReducedMotion(this.reducedMotion);
+            this.eventManager.setReducedMotion(this.reducedMotion);
+            this.nebulaField.setReducedMotion(this.reducedMotion);
             this.reducedMotionMQL.addEventListener('change', this.onReducedMotionChange);
         }
 
         this.createNodes();
+        this.createPlanets();
         this.centerContainer();
 
         this.emitScroll();
@@ -107,6 +123,15 @@ export class PixiApp {
         });
     }
 
+    private createPlanets(): void {
+        PLANETS.forEach((cfg) => {
+            const planet = new Planet(cfg, this.isPortrait);
+            planet.bake(this.app.renderer);
+            this.container.addChild(planet.container);
+            this.planets.push(planet);
+        });
+    }
+
     private centerContainer(): void {
         const screenWidth = this.app.screen.width;
         const screenHeight = this.app.screen.height;
@@ -117,6 +142,7 @@ export class PixiApp {
 
         if (wasPortrait !== this.isPortrait) {
             this.nodes.forEach(node => node.updateOrientation(this.isPortrait));
+            this.planets.forEach(planet => planet.updateOrientation(this.isPortrait));
         }
 
         const scale = Math.min(screenWidth / design.width, screenHeight / design.height);
@@ -130,6 +156,10 @@ export class PixiApp {
         this.nodes.forEach(node => {
             const effectiveZ = node.getEffectiveZ(currentZ);
             node.snapToTarget(centerX, centerY, effectiveZ);
+        });
+        this.planets.forEach(planet => {
+            const effectiveZ = planet.getEffectiveZ(currentZ);
+            planet.snapToTarget(centerX, centerY, effectiveZ);
         });
 
         this.debugGraphics.clear();
@@ -167,15 +197,33 @@ export class PixiApp {
             );
         });
 
+        const planetOffsetX = mouseNX * PLANET.PARALLAX_X;
+        const planetOffsetY = mouseNY * PLANET.PARALLAX_Y;
+        this.planets.forEach((planet) => {
+            const effectiveZ = planet.getEffectiveZ(currentZ);
+            planet.update(
+                effectiveZ,
+                CAMERA.FOCAL_LENGTH,
+                time,
+                centerX,
+                centerY,
+                planetOffsetX,
+                planetOffsetY,
+            );
+        });
+
+        this.eventManager.update(delta, currentZ, design);
+
         this.drawConstellation(currentZ);
 
-        const sorted = this.nodes
-            .slice()
-            .sort((a, b) => b.getEffectiveZ(currentZ) - a.getEffectiveZ(currentZ));
-        sorted.forEach((node, i) => this.container.setChildIndex(node.container, i));
+        type ZSortable = { container: Container; getEffectiveZ: (z: number) => number };
+        const sortable: ZSortable[] = [...this.nodes, ...this.planets, ...this.eventManager.getEvents()];
+        sortable.sort((a, b) => b.getEffectiveZ(currentZ) - a.getEffectiveZ(currentZ));
+        sortable.forEach((item, i) => this.container.setChildIndex(item.container, i));
         this.container.setChildIndex(this.constellation, 0);
 
         this.starfield.update(time, this.scrollController.velocity, this.scrollController.lastInputTime, mouseNX, mouseNY);
+        this.nebulaField.update(time, mouseNX, mouseNY);
 
         this.emitScroll();
     }
@@ -251,6 +299,8 @@ export class PixiApp {
         }
         this.inputManager?.destroy();
         this.starfield?.destroy();
+        this.nebulaField?.destroy();
+        this.eventManager?.clear();
         this.app.destroy(true, { children: true, texture: true });
     }
 }
