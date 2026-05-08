@@ -146,7 +146,7 @@ export const fullResume = {
   name: 'Srđan Janeković',
   location: 'Belgrade, Serbia',
   email: 'srdjan.janekovic@gmail.com',
-  linkedin: 'www.linkedin.com/in/srdjan-janekovic-47711862',
+  linkedin: 'www.linkedin.com/in/srđan-janeković-47711862',
   summary: 'Technical Lead with 13+ years of professional experience delivering digital games and web-based products in regulated/lottery environments. Strong JavaScript/TypeScript engineering and platform ownership, focused on scalable SDKs/frameworks, developer experience, release discipline, and performance. Effective cross-functional partner, translating design intent into polished, responsive UI through close collaboration with designers (Figma handoff, specs, iteration).',
   skills: [
     'Languages: TypeScript, JavaScript, SQL',
