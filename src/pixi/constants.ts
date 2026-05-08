@@ -4,9 +4,9 @@ export const DESIGN = {
 } as const;
 
 export const SCROLL = {
-    SNAP_POINTS: [0, 1500, 3000, 4500, 6000],
+    SNAP_POINTS: [0, 1500, 3000, 4500, 6000, 7500],
     MIN_Z: 0,
-    MAX_Z: 6000,
+    MAX_Z: 7500,
     SCROLL_MULTIPLIER: 2,
     SNAP_DELAY_MS: 400,
     SNAP_LERP: 0.15,
@@ -26,8 +26,6 @@ export const STARFIELD = {
     MAX_ALPHA: 0.8,
     MIN_BLINK_SPEED: 1,
     MAX_BLINK_SPEED: 4,
-    WARP_THRESHOLD: 0.5,
-    WARP_MULTIPLIER: 2,
     PARALLAX_X: 18,
     PARALLAX_Y: 12,
 } as const;

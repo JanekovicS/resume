@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bgGlow1" cx="50%" cy="0%" r="60%">
+      <stop offset="0%" stop-color="#4facfe" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#4facfe" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgGlow2" cx="50%" cy="100%" r="55%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accentLine" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#4facfe"/>
+      <stop offset="100%" stop-color="#00f2fe"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0a0c10"/>
+  <rect width="1200" height="630" fill="url(#bgGlow1)"/>
+  <rect width="1200" height="630" fill="url(#bgGlow2)"/>
+
+  <g fill="#ffffff">
+    <circle cx="120" cy="80" r="1.5" opacity="0.7"/>
+    <circle cx="200" cy="180" r="1" opacity="0.4"/>
+    <circle cx="350" cy="60" r="2" opacity="0.85"/>
+    <circle cx="500" cy="120" r="1" opacity="0.35"/>
+    <circle cx="700" cy="80" r="1.5" opacity="0.6"/>
+    <circle cx="900" cy="160" r="1" opacity="0.5"/>
+    <circle cx="1080" cy="100" r="2" opacity="0.75"/>
+    <circle cx="1130" cy="220" r="1" opacity="0.4"/>
+    <circle cx="80" cy="300" r="1" opacity="0.5"/>
+    <circle cx="60" cy="450" r="1.5" opacity="0.6"/>
+    <circle cx="180" cy="520" r="1" opacity="0.4"/>
+    <circle cx="320" cy="580" r="1" opacity="0.3"/>
+    <circle cx="600" cy="540" r="1.5" opacity="0.5"/>
+    <circle cx="850" cy="500" r="1" opacity="0.4"/>
+    <circle cx="1050" cy="460" r="2" opacity="0.7"/>
+    <circle cx="1140" cy="560" r="1" opacity="0.5"/>
+    <circle cx="420" cy="500" r="1" opacity="0.35"/>
+    <circle cx="780" cy="220" r="1" opacity="0.45"/>
+  </g>
+
+  <g stroke="#4facfe" stroke-opacity="0.18" stroke-width="0.6" fill="none">
+    <line x1="350" y1="60" x2="500" y2="120"/>
+    <line x1="700" y1="80" x2="900" y2="160"/>
+    <line x1="1050" y1="460" x2="1140" y2="560"/>
+  </g>
+
+  <rect x="100" y="240" width="60" height="2" fill="url(#accentLine)"/>
+
+  <text x="100" y="340"
+        font-family="'Outfit', 'Inter', 'Helvetica Neue', Arial, sans-serif"
+        font-size="92"
+        font-weight="900"
+        fill="#ffffff"
+        letter-spacing="-1">SRĐAN JANEKOVIĆ</text>
+
+  <text x="100" y="395"
+        font-family="'Outfit', 'Inter', 'Helvetica Neue', Arial, sans-serif"
+        font-size="22"
+        font-weight="700"
+        fill="#4facfe"
+        letter-spacing="5">TECHNICAL LEAD · WEB GAMES · HIGH-PERFORMANCE SDKs</text>
+
+  <text x="100" y="540"
+        font-family="'Outfit', 'Inter', 'Helvetica Neue', Arial, sans-serif"
+        font-size="14"
+        font-weight="600"
+        fill="#ffffff"
+        opacity="0.45"
+        letter-spacing="3">INTERACTIVE CV · 13+ YEARS</text>
+</svg>

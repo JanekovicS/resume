@@ -17,16 +17,21 @@ defineProps<{
         </header>
 
         <Transition name="overlay-fade">
-            <div v-if="selectedExperience" class="detail-card">
-                <button class="close-btn" @click="onClose">
-                    <span class="close-text">CLOSE</span>
+            <div
+                v-if="selectedExperience"
+                class="detail-card"
+                role="dialog"
+                aria-modal="true"
+                :aria-labelledby="'detail-title'"
+            >
+                <button class="close-btn" @click="onClose" aria-label="Close">
                     <span class="close-icon">×</span>
                 </button>
 
                 <div class="card-content">
                     <div class="content-inner">
                         <span class="period">{{ selectedExperience.period }}</span>
-                        <h2>{{ selectedExperience.title }}</h2>
+                        <h2 id="detail-title">{{ selectedExperience.title }}</h2>
                         <h3>{{ selectedExperience.company }}</h3>
                         <div class="line"></div>
                         <p class="description">{{ selectedExperience.description }}</p>
@@ -136,36 +141,31 @@ h1 {
 
 .close-btn {
     position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    color: white;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    width: 32px;
+    height: 32px;
+    color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    justify-content: center;
+    transition: color 0.2s ease;
     z-index: 101;
 }
 
-.close-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.05);
-}
-
-.close-text {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.2rem;
+.close-btn:hover,
+.close-btn:focus-visible {
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .close-icon {
     font-size: 1.5rem;
     line-height: 1;
+    font-weight: 300;
 }
 
 .period {
@@ -261,22 +261,22 @@ h3 {
 }
 
 .primary-btn {
-    background: white;
-    border: none;
-    padding: 1rem 2.5rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1.5rem;
     border-radius: 100px;
-    color: #0a0c10;
-    font-weight: 800;
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.18em;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 .primary-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
 }
 
 @keyframes contentSlideUp {

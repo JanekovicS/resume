@@ -119,6 +119,26 @@ export const experiences: Experience[] = [
     px: 375,
     py: 667,
     z: 6000,
+  },
+  {
+    id: 'next',
+    title: 'The Next Chapter',
+    company: 'Still Building, Still Learning',
+    period: '2026 →',
+    year: 'ONGOING',
+    description: 'The journey continues. Always exploring new tech, new challenges, and new ways to ship better games and tools.',
+    highlights: [
+      'Exploring real-time rendering & WebGPU',
+      'Deeper into systems design & developer experience',
+      'Open to what\'s next'
+    ],
+    tags: ['Curious', 'Building', 'Learning'],
+    color: 0x00f2fe,
+    lx: 960,
+    ly: 540,
+    px: 375,
+    py: 667,
+    z: 7500,
   }
 ];
 

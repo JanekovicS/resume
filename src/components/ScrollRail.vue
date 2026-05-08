@@ -9,18 +9,27 @@ defineProps<{
 
 <template>
     <aside class="scroll-rail" aria-hidden="true">
-        <div class="track">
-            <div class="fill" :style="{ height: `${progress * 100}%` }"></div>
+        <div class="nodes">
+            <template v-for="i in total" :key="i">
+                <div
+                    class="node"
+                    :class="{
+                        active: i - 1 === snapIndex,
+                        passed: i - 1 < snapIndex
+                    }"
+                >
+                    <span v-if="labels && labels[i - 1]" class="label">{{ labels[i - 1] }}</span>
+                </div>
+                <div
+                    v-if="i < total"
+                    class="connector"
+                    :class="{
+                        passed: i - 1 < snapIndex,
+                        current: i - 1 === snapIndex
+                    }"
+                />
+            </template>
         </div>
-        <ol class="dots">
-            <li
-                v-for="i in total"
-                :key="i"
-                :class="{ active: i - 1 === snapIndex, passed: i - 1 < snapIndex }"
-            >
-                <span v-if="labels && labels[i - 1]" class="label">{{ labels[i - 1] }}</span>
-            </li>
-        </ol>
     </aside>
 </template>
 
@@ -28,98 +37,87 @@ defineProps<{
 .scroll-rail {
     position: fixed;
     top: 50%;
-    right: 1.75rem;
+    right: 2rem;
     transform: translateY(-50%);
     z-index: 12;
     pointer-events: none;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    height: clamp(160px, 36vh, 300px);
+    height: clamp(240px, 46vh, 400px);
+    padding: 0.5rem 0;
 }
 
-.track {
-    position: relative;
-    width: 1px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-}
-
-.fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to bottom, #4facfe, #00f2fe);
-    transition: height 0.18s ease;
-    box-shadow: 0 0 6px rgba(79, 172, 254, 0.45);
-}
-
-.dots {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    height: 100%;
+.nodes {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    height: 100%;
 }
 
-.dots li {
+.node {
     position: relative;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.18);
-    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.dots li.passed {
-    background: rgba(79, 172, 254, 0.55);
-}
-
-.dots li.active {
-    background: #4facfe;
-    transform: scale(1.6);
-    box-shadow: 0 0 12px rgba(79, 172, 254, 0.7);
+    flex: 0 0 auto;
+    padding: 0.3rem 0;
+    text-align: center;
 }
 
 .label {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
     font-family: 'Outfit', system-ui, sans-serif;
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.35);
-    transition: color 0.3s ease, opacity 0.3s ease;
+    color: rgba(255, 255, 255, 0.42);
+    transition:
+        color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        text-shadow 0.4s ease;
     white-space: nowrap;
+    display: block;
+    transform-origin: center center;
 }
 
-.dots li.passed .label {
-    color: rgba(79, 172, 254, 0.6);
+.node.passed .label {
+    color: rgba(79, 172, 254, 0.78);
 }
 
-.dots li.active .label {
+.node.active .label {
     color: #e0f3ff;
-    transform: translateY(-50%) scale(0.625);
-    transform-origin: right center;
+    transform: scale(1.2);
+    text-shadow:
+        0 0 14px rgba(79, 172, 254, 0.55),
+        0 0 28px rgba(79, 172, 254, 0.25);
+}
+
+.connector {
+    flex: 1 1 0;
+    min-height: 1.2rem;
+    width: 1px;
+    margin-right: 0;
+    background: rgba(255, 255, 255, 0.12);
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.connector.passed {
+    background: #4facfe;
+    box-shadow: 0 0 5px rgba(79, 172, 254, 0.4);
+}
+
+.connector.current {
+    background: linear-gradient(to bottom, #4facfe 0%, rgba(255, 255, 255, 0.12) 100%);
+    box-shadow: 0 0 5px rgba(79, 172, 254, 0.25);
 }
 
 @media (max-width: 700px) {
+    .scroll-rail {
+        right: 1rem;
+        height: clamp(180px, 38vh, 280px);
+    }
+
     .label {
         display: none;
     }
-}
 
-@media (max-width: 600px) {
-    .scroll-rail {
-        right: 0.9rem;
-        height: clamp(140px, 32vh, 240px);
+    .node {
+        width: 1px;
     }
 }
 </style>

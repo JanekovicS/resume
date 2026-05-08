@@ -51,8 +51,9 @@ export class TimelineNode {
             fontFamily: 'Outfit',
             letterSpacing: 4,
         });
+        const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
         const hint = new Text({
-            text: this.exp.id === 'intro' ? '' : 'CLICK TO EXPLORE',
+            text: this.exp.id === 'intro' ? '' : (isTouch ? 'TAP TO EXPLORE' : 'CLICK TO EXPLORE'),
             style: hintStyle
         });
         hint.anchor.set(0.5);
